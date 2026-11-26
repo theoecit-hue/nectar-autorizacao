@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Néctar · Autorização de saída</title>
+<link rel="stylesheet" href="autorizacao.css">
+</head>
+<body>
+
+<!-- ============ TELA (não sai na impressão) ============ -->
+<div class="tela">
+  <header>
+    <div class="logo">🐝 NÉC<span>TAR</span> <small>· Autorização de saída</small></div>
+  </header>
+
+  <main>
+    <section class="painel">
+      <div class="card aviso-prog" id="programaBox" hidden>
+        <h2>🖨️ Programa da impressora não encontrado</h2>
+        <p class="s">Este site imprime pela impressora térmica e lê o leitor RFID <b>deste computador</b>. Para isso, o programa da impressora precisa estar aberto aqui.</p>
+        <ol class="s">
+          <li>Primeira vez: <a href="programa/Nectar-Impressao.zip" download>baixe o programa</a>, extraia a pasta e instale o <a href="https://www.python.org/downloads/" target="_blank" rel="noopener">Python</a> (marque “Add python.exe to PATH”).</li>
+          <li>Ligue o leitor (Arduino) e a impressora no USB.</li>
+          <li>Dê dois cliques em <b>Iniciar Néctar Impressão.bat</b> e deixe a janela aberta.</li>
+          <li>Se o navegador perguntar se este site pode <b>acessar dispositivos da rede local</b>, clique em <b>Permitir</b>.</li>
+        </ol>
+      </div>
+
+      <div class="card">
+        <h2>📝 Dados da autorização</h2>
+        <p class="s">Preencha <b>antes</b> de aproximar a tag. Esses dados <b>não saem no papel</b>: vão só no aviso para o responsável, no painel dos pais.</p>
+        <label for="autPor">Autorizado por</label>
+        <input id="autPor" placeholder="Ex.: Coord. Maria Silva" autocomplete="off" list="autPorLista">
+        <datalist id="autPorLista"></datalist>
+        <label for="motivo">Motivo da saída</label>
+        <input id="motivo" placeholder="Ex.: Consulta médica" autocomplete="off" maxlength="200">
+        <div class="chips" id="chips">
+          <button type="button" class="chip">Consulta médica</button>
+          <button type="button" class="chip">Mal-estar</button>
+          <button type="button" class="chip">Pedido do responsável</button>
+          <button type="button" class="chip">Compromisso familiar</button>
+        </div>
+        <label class="chk"><input type="checkbox" id="limparMotivo" checked> Limpar o motivo depois de cada aluno</label>
+        <div class="msg" id="cfgMsg"></div>
+      </div>
+
+      <div class="card">
+        <h2>🖨️ Aproxime a tag do leitor</h2>
+        <p class="s">Ao ler a tag de um aluno cadastrado, a autorização é preenchida com o nome e o horário e enviada para a impressora térmica.</p>
+
+        <div class="ard"><span class="pill" id="arduinoStatus">⚪ Verificando o leitor…</span></div>
+        <div class="ard"><span class="pill" id="impStatus">⚪ Verificando a impressora…</span></div>
+
+        <label for="tagManual">Ou digite / escaneie o ID da tag</label>
+        <div class="linha">
+          <input id="tagManual" placeholder="Ex.: A1B2C3D4" autocomplete="off" style="text-transform:uppercase">
+          <button class="btn" id="btnManual">Imprimir</button>
+        </div>
+
+        <div class="msg" id="msg"></div>
+
+        <div class="linha" style="margin-top:12px">
+          <button class="btn g" id="btnReimprimir" disabled>↻ Reimprimir última</button>
+          <button class="btn g" id="btnTeste">Imprimir teste</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Autorizações impressas hoje</h3>
+        <div id="hist"><p class="s">Nenhuma ainda.</p></div>
+      </div>
+    </section>
+
+    <section class="previa">
+      <p class="s" style="text-align:center;margin-top:0">Prévia do comprovante (38 mm)</p>
+      <div class="papel"><div id="ticketWrap"></div></div>
+    </section>
+  </main>
+</div>
+
+<!-- ============ COMPROVANTE (único elemento impresso) ============ -->
+<div id="ticket">
+  <div class="t-logo">
+    <img id="tLogoImg" src="logo-nectar.png" alt="Néctar"
+         onerror="this.hidden=true;document.getElementById('tLogoTxt').hidden=false">
+    <div id="tLogoTxt" class="t-logo-txt" hidden>NÉCTAR</div>
+  </div>
+  <div class="t-sub"><i></i>CONTROLE DE ACESSO ESCOLAR<i></i></div>
+  <div class="t-hr"></div>
+
+  <svg class="t-check" viewBox="0 0 100 100" aria-hidden="true">
+    <circle cx="50" cy="50" r="42" fill="none" stroke="#000" stroke-width="9"/>
+    <path d="M30 51 L44 65 L71 37" fill="none" stroke="#000" stroke-width="11" stroke-linecap="square" stroke-linejoin="miter"/>
+  </svg>
+
+  <div class="t-banner">AUTORIZAÇÃO DE SAÍDA</div>
+
+  <p class="t-txt">A Direção da escola autoriza a saída do aluno(a) do ambiente escolar.</p>
+
+  <div class="t-campo"><b>Aluno(a):</b><span id="tNome" class="t-val">&nbsp;</span></div>
+  <div class="t-campo"><b>Horário:</b><span id="tHora" class="t-val curto">&nbsp;:&nbsp;</span></div>
+  <div class="t-campo t-peq"><b>Data:</b><span id="tData" class="t-val curto">&nbsp;</span></div>
+
+  <p class="t-apr">Apresente este comprovante ao porteiro.</p>
+  <div class="t-hr"></div>
+  <div class="t-rod">NÉCTAR</div>
+  <div class="t-slogan"><i></i>Tecnologia a favor da nossa escola.<i></i></div>
+</div>
+
+<script src="autorizacao.js"></script>
+</body>
+</html>

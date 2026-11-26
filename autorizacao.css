@@ -1,0 +1,75 @@
+:root{
+  --bg:#fff8e6; --card:#fff; --ink:#2b2110; --mut:#7a6a4a; --line:#f0dfb4;
+  --mel:#f5a623; --mel2:#e08e0b; --ok:#2e9e5b; --warn:#d98a00; --bad:#d64545;
+}
+@media (prefers-color-scheme:dark){
+  :root{ --bg:#1b160d; --card:#262013; --ink:#f6ecd6; --mut:#b8a67f; --line:#3d331d; }
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink)}
+header{padding:12px 16px;background:var(--card);border-bottom:3px solid var(--mel)}
+.logo{font-weight:800;font-size:1.3rem;letter-spacing:.04em}.logo span{color:var(--mel2)}
+.logo small{font-weight:500;font-size:.95rem;color:var(--mut);letter-spacing:0}
+main{max-width:1000px;margin:0 auto;padding:16px;display:grid;grid-template-columns:1fr 300px;gap:16px;align-items:start}
+@media (max-width:760px){ main{grid-template-columns:1fr} }
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:16px}
+h2,h3{margin:0 0 8px}
+.s{color:var(--mut);font-size:.9rem}
+label{display:block;font-size:.82rem;font-weight:600;color:var(--mut);margin:14px 0 4px}
+input{flex:1;min-width:0;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font:inherit;background:var(--bg);color:var(--ink)}
+input:focus{outline:2px solid var(--mel);border-color:var(--mel)}
+.linha{display:flex;gap:8px;flex-wrap:wrap}
+.btn{padding:10px 16px;border:0;border-radius:10px;background:var(--mel);color:#2b2110;font:inherit;font-weight:700;cursor:pointer}
+.btn:hover{background:var(--mel2)}.btn:disabled{opacity:.5;cursor:default}
+.btn.g{background:transparent;border:1px solid var(--line);color:var(--ink);font-weight:600}
+.ard{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:6px}
+.pill{padding:6px 12px;border-radius:999px;border:1px solid var(--line);font-size:.88rem;color:var(--mut)}
+.pill.on{color:var(--ok);border-color:var(--ok)}
+.msg{margin-top:12px;font-size:.95rem;min-height:1.2em;font-weight:600}
+.msg.ok{color:var(--ok)}.msg.w{color:var(--warn)}.msg.bad{color:var(--bad)}
+.hi{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid var(--line);font-size:.92rem}
+.hi:last-child{border-bottom:0}
+.papel{background:#fff;border-radius:6px;padding:10px 0;box-shadow:0 6px 20px #0003;display:flex;justify-content:center}
+.papel #ticket{zoom:1.55}
+
+/* ================= COMPROVANTE — papel 38 mm (área impressa ≈ 35 mm) ================= */
+#ticket{width:35mm;color:#000;background:#fff;font-family:"Segoe UI",Arial,sans-serif;text-align:center;padding:1.5mm 0 3mm;margin:0 auto}
+.t-logo img{width:32mm;display:block;margin:0 auto}
+.t-logo img[hidden],.t-logo-txt[hidden]{display:none}
+.t-logo-txt{font-family:"Arial Black",Arial,sans-serif;font-weight:900;font-size:14pt;letter-spacing:.02em;line-height:1}
+.t-sub,.t-slogan{display:flex;align-items:center;gap:1mm;justify-content:center;font-size:4.6pt;letter-spacing:.06em;margin-top:1mm;white-space:nowrap}
+.t-sub i,.t-slogan i{flex:1;height:.3mm;background:#000;max-width:3mm}
+.t-slogan{letter-spacing:0;font-style:italic;font-size:4.8pt;margin-top:.4mm}
+.t-hr{height:.4mm;background:#000;margin:1.6mm 0}
+.t-check{width:11mm;height:11mm;display:block;margin:.5mm auto 1.5mm}
+.t-banner{background:#000;color:#fff;font-weight:900;font-size:6.6pt;letter-spacing:0;white-space:nowrap;padding:1.3mm .3mm;border-radius:1mm;
+  -webkit-print-color-adjust:exact;print-color-adjust:exact}
+.t-txt{font-size:6.8pt;line-height:1.25;margin:1.8mm .5mm}
+.t-campo{display:flex;align-items:flex-end;gap:1mm;text-align:left;font-size:7pt;margin:1.6mm 0 0}
+.t-campo b{white-space:nowrap}
+.t-val{flex:1;border-bottom:.3mm solid #000;font-weight:800;padding:0 .4mm .2mm;line-height:1.15;word-break:break-word}
+.t-val.curto{flex:0 0 auto;min-width:11mm}
+.t-peq{font-size:6pt}
+.t-apr{font-weight:800;font-size:7pt;line-height:1.2;margin:2.2mm .5mm 0}
+.t-rod{font-weight:900;font-style:italic;font-size:8pt}
+
+/* ================= IMPRESSÃO: só o comprovante ================= */
+@page{margin:0}   /* sem tamanho fixo: usa a bobina configurada no driver da impressora */
+@media print{
+  html,body{background:#fff;margin:0;padding:0;height:auto;min-height:0}
+  .tela{display:none !important}
+  #ticket{margin:0 auto;padding-top:0;zoom:1;page-break-after:avoid;break-after:avoid}
+}
+
+/* Dados da autorização */
+#autPor,#motivo{width:100%}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chip{border:1px solid var(--line);background:transparent;color:var(--ink);padding:5px 10px;border-radius:999px;font:inherit;font-size:.85rem;cursor:pointer}
+.chip:hover{border-color:var(--mel)}
+.chk{display:flex;align-items:center;gap:8px;font-weight:500;color:var(--ink);margin-top:12px}
+.chk input{width:auto;flex:none}
+.hi small{display:block;color:var(--mut);font-weight:400}
+
+/* aviso quando o programa da impressora não está aberto */
+.aviso-prog{border:2px solid var(--bad, #d64545)}
+.aviso-prog ol{margin:6px 0 0;padding-left:20px}.aviso-prog li{margin:4px 0}
